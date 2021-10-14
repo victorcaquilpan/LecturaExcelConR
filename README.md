@@ -14,6 +14,8 @@ Se dispone una serie de 10 documentos MS Excel con información creada de forma 
 ```r
 library(readr)
 
+read_excel(path = "datos/documento1.xlsx",sheet = 1)
+
 
 
 ```

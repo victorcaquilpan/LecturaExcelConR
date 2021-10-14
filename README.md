@@ -11,11 +11,10 @@ En este pequeño tutorial se verán tres formas de leer archivos, utilizando cic
 
 Se dispone una serie de 10 documentos MS Excel con información creada de forma aleatoria. Estos documentos se encuentran en la carpeta `datos`. Podemos leerlos de manera individual usando `readr`.
 
-```{r}
+```r
 library(readr)
 
 read_excel(path = "datos/documento1.xlsx",sheet = 1)
-
 
 
 ```

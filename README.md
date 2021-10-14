@@ -10,6 +10,7 @@ En este pequeño tutorial se verán tres formas de leer archivos, utilizando cic
 # Datos a utilizar
 
 ``` 
+library(readr)
 
 
 

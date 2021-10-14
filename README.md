@@ -7,11 +7,13 @@ En este pequeño tutorial se verán tres formas de leer archivos, utilizando cic
 - En simples palabras, las funciones de la librería [purrr](https://github.com/tidyverse/purrr) nos permiten ejecutar funciones a múltiples objetos a un mismo tiempo. Lo que podríamos hacer directamente con ciclos `for` lo podemos traducir a una función de la familia `map` para llevar a cabo el mismo proceso de manera paralela (**Esto no significa que se utilicen múltiples núcleos**). 
 - Por otra parte [furrr](https://github.com/DavisVaughan/furrr) nos permite ir un paso más allá, integrando las capacidades de **purrr** con procesamiento en paralelo a nivel de núcleo.
 
-`r 
-asdasd
+# Datos a utilizar
+
+``` 
 
 
-`
+
+```
 
 
 

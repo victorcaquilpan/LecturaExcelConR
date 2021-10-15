@@ -18,6 +18,14 @@ read_excel(path = "datos/documento1.xlsx",sheet = 1)
 
 
 ```
+## Probando loops
 
+Dado que nosotros queremos leer varios archivos, los cuales contienen varias hojas, una forma fácil para hacer esto, es crear un ciclo `for` aninado dentro de otro.
+
+```r
+library(readr)
+
+
+```
 
 

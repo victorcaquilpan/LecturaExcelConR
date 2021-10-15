@@ -12,7 +12,7 @@ En este pequeño tutorial se verán tres formas de leer archivos, utilizando cic
 Se dispone una serie de 10 documentos MS Excel con información aleatoria. Estos documentos se encuentran en la carpeta `datos` y cuentan con menos de 1000 filas y una diferente cantidad de hojas cada uno. Podemos leerlos de manera individual usando `readr`.
 
 ```r
-library(readr)
+library(readxl)
 
 read_excel(path = "datos/documento1.xlsx",sheet = 1)
 
@@ -23,9 +23,53 @@ read_excel(path = "datos/documento1.xlsx",sheet = 1)
 Dado que nosotros queremos leer varios archivos, los cuales contienen varias hojas, una forma fácil para hacer esto, es crear un ciclo `for` aninado dentro de otro.
 
 ```r
-library(readr)
+library(readxl)
+
+# Leemos los archivos disponibles
+Archivos <- list.files("datos",full.names = TRUE)
+
+# Creamos una lista vacia para recojer los datos
+Datos <- data.frame()
+
+# Creamos un ciclo para recorrer los archivos
+for (archivo in seq_along(Archivos)) {
+  
+  # Vemos las hojas disponibles en cada archivo
+  Hojas <- excel_sheets(Archivos[archivo])
+  
+  # Creamos un ciclo para recorrer hojas
+  for (hoja in seq_along(Hojas)) {
+    
+    # Alojamos los datos en nuestra lista
+    Documento <- read_excel(path = Archivos[archivo],sheet = Hojas[hoja])
+    
+    # Apendizamos nuestros datos al objeto datos
+    Datos <- rbind(Datos,Documento)
+
+  }
+  
+}
 
 
 ```
 
+## Utilizando purrr
+
+```r
+library(readxl)
+
+# Leemos los archivos disponibles
+Archivos <- list.files("datos",full.names = TRUE)
+
+# Primero tenemos que identificar las hojas por cada archivo
+Hojas <- map(Archivos, ~ excel_sheets(.x))
+
+# Creamos una función para leer las hojas
+LecturaExcel <- function(Archivos,Hojas) {
+  Datos <- map_df(Hojas, ~ read_excel(path = Archivos,sheet = .x),Archivos)}
+
+# Extraemos la informacion de todas las hojas
+Datos <- map2_df(Archivos,Hojas, LecturaExcel)
+
+```
 

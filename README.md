@@ -9,7 +9,7 @@ En este pequeño tutorial se verán tres formas de leer archivos, utilizando cic
 
 ## Datos a utilizar
 
-Se dispone una serie de 10 documentos MS Excel con información creada de forma aleatoria. Estos documentos se encuentran en la carpeta `datos`. Podemos leerlos de manera individual usando `readr`.
+Se dispone una serie de 10 documentos MS Excel con información creada de forma aleatoria. Estos documentos se encuentran en la carpeta `datos` y cuentan con menos de 1000 filas y diferente cantidad de hojas. Podemos leerlos de manera individual usando `readr`.
 
 ```r
 library(readr)

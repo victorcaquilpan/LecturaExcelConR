@@ -16,7 +16,6 @@ library(readxl)
 
 read_excel(path = "datos/documento1.xlsx",sheet = 1)
 
-
 ```
 ## Probando loops
 
@@ -45,11 +44,8 @@ for (archivo in seq_along(Archivos)) {
     
     # Apendizamos nuestros datos al objeto datos
     Datos <- rbind(Datos,Documento)
-
   }
-  
 }
-
 
 ```
 
@@ -57,7 +53,7 @@ Cómo podemos ver, esto se realiza sin problemas, pero a través de la ejecució
 
 ## Utilizando purrr
 
-Ahora, podemos traducir nuestro procedimiento anterior utilizando las funciones `map`. Estas funciones disponen de una sintaxis sencilla, lo que es una gran plus en cuanto a la capacidad de ser interpretada por otros usuarios. Dado que tenemos que iterar a través de los archivos y sus distintas hojas, podemos utilizar dos funciones `map` de la siguiente forma.
+Ahora, podemos traducir nuestro procedimiento anterior utilizando las funciones `map` de la librería **purrr**. Estas funciones disponen de una sintaxis sencilla, lo que es una gran plus en cuanto a la capacidad de ser interpretada por otros usuarios. Dado que tenemos que iterar a través de los archivos y sus distintas hojas, podemos utilizar dos funciones `map` de la siguiente forma.
 
 ```r
 library(readxl)
@@ -78,3 +74,7 @@ Datos <- map2_df(Archivos,Hojas, LecturaExcel)
 ```
 
 A pesar de que en general las funciones `map` nos devuelven una lista, nosotros podemos indicarle que el resultado sea un dataframe a través de `map_df` o `map2_df`.
+
+## Utilizando furrr
+
+Cómo mencionabamos al principio podemos ir un paso más allá y paralelizar nuestro proceso a nivel de CPU. Para esto simplemente aplicaremos las funciones de la familia `future_map` de la librería **furrr**.

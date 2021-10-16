@@ -25,11 +25,8 @@ for (archivo in seq_along(Archivos)) {
     
     # Apendizamos nuestros datos al objeto datos
     Datos <- rbind(Datos,Documento)
-
   }
-  
 }
-
 
 # Prueba utilizando purrr ----
 

@@ -53,7 +53,11 @@ for (archivo in seq_along(Archivos)) {
 
 ```
 
+Cómo podemos ver, esto se realiza sin problemas, pero a través de la ejecución de varias líneas de código y usando ciclos, los cuales no son un proceso tan rápido.
+
 ## Utilizando purrr
+
+Ahora, podemos traducir nuestro procedimiento anterior utilizando las funciones `map`. Estas funciones disponen de una sintaxis sencilla, lo que es una gran plus en cuanto a la capacidad de ser interpretada por otros usuarios. Dado que tenemos que iterar a través de los archivos y sus distintas hojas, podemos utilizar dos funciones `map` de la siguiente forma.
 
 ```r
 library(readxl)
@@ -66,10 +70,11 @@ Hojas <- map(Archivos, ~ excel_sheets(.x))
 
 # Creamos una función para leer las hojas
 LecturaExcel <- function(Archivos,Hojas) {
-  Datos <- map_df(Hojas, ~ read_excel(path = Archivos,sheet = .x),Archivos)}
+   map(Hojas, ~ read_excel(path = Archivos,sheet = .x),Archivos)}
 
 # Extraemos la informacion de todas las hojas
 Datos <- map2_df(Archivos,Hojas, LecturaExcel)
 
 ```
 
+A pesar de que en general las funciones `map` nos devuelven una lista, nosotros podemos indicarle que el resultado sea un dataframe a través de `map_df` o `map2_df`.

@@ -57,6 +57,7 @@ Ahora, podemos traducir nuestro procedimiento anterior utilizando las funciones 
 
 ```r
 library(readxl)
+library(purrr)
 
 # Leemos los archivos disponibles
 Archivos <- list.files("datos",full.names = TRUE)
@@ -78,3 +79,29 @@ A pesar de que en general las funciones `map` nos devuelven una lista, nosotros 
 ## Utilizando furrr
 
 Cómo mencionabamos al principio podemos ir un paso más allá y paralelizar nuestro proceso a nivel de CPU. Para esto simplemente aplicaremos las funciones de la familia `future_map` de la librería **furrr**.
+
+```r
+library(readxl)
+library(furrr)
+
+# Leemos los archivos disponibles
+Archivos <- list.files("datos",full.names = TRUE)
+
+# Declaramos que correremos nuestro proceso en múltiples sesiones de R
+future::plan(multisession)
+
+# Primero tenemos que identificar las hojas por cada archivo
+Hojas <- future_map(Archivos, ~ excel_sheets(.x), .options = furrr_options(seed = T))
+
+# Creamos una función para leer las hojas
+LecturaExcel <- function(Archivos,Hojas) {
+  future_map(Hojas, ~ read_excel(path = Archivos,sheet = .x),Archivos, .options = furrr_options(seed = T))}
+
+# Extraemos la informacion de todas las hojas
+Datos <- future_map2_dfr(Archivos,Hojas, LecturaExcel, .options = furrr_options(seed = T))
+
+```
+
+La ventaja de utilizar **furrr** es que podemos incrementar la velocidad del proceso que estamos realizando sacandole el partido a los múltiples núcleos de nuestro CPU. Adicionalmente, si ya disponemos de una tarea con funciones `map`, simplemente tenemos que encontrar su simil a `future_map`. 
+
+Si se desea adquirir mayor información acerca del cómo usar **purrr** y **furrr**, al principio de este documento se encuentran los enlaces a sus repositorios en Github.

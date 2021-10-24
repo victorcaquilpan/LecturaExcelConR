@@ -174,4 +174,4 @@ Unit: seconds
 
 Es posible apreciar una clara diferencia en el rendimiento entre los tres casos (`furrr` > `purrr` > `ciclo for`). 
 
-Si se desea adquirir mayor información acerca del cómo usar `purrr` y `furrr`, al principio de este documento se encuentran los enlaces a sus repositorios en Github.
+Si se desea adquirir mayor información acerca del cómo usar **purrr** y **furrr**, al principio de este documento se encuentran los enlaces a sus repositorios en Github.

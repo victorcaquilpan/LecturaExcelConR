@@ -64,6 +64,9 @@ Datos <- future_map2_dfr(Archivos,Hojas, LecturaExcel, .options = furrr_options(
 # Finalmente podemos realizar una comparación con microbenchmark
 library(microbenchmark)
 
+# Declaramos que correremos nuestro proceso en múltiples sesiones de R
+future::plan(multisession)
+
 # Analisis
 microbenchmark(ciclofor = {
   # Operacion con for

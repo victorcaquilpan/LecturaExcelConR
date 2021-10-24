@@ -17,6 +17,10 @@ library(readxl)
 read_excel(path = "datos/documento1.xlsx",sheet = 1)
 
 ```
+## Procedimiento
+
+Se requiere extraer la información presente en cada archivo y en cada una de sus hojas, y disponerla en un objeto dataframe. Si se quiere replicar este proceso para extraer información que no es posible unificar en un sólo dataframe, se recomienda compilar todo en un objeto de tipo lista.
+
 ## Probando loops
 
 Dado que nosotros queremos leer varios archivos, los cuales contienen varias hojas, una forma fácil para hacer esto, es crear un ciclo `for` aninado dentro de otro.

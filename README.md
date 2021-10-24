@@ -5,7 +5,7 @@ Al utilizar R u otro lenguaje de programación similar, nos encontramos con una 
 En este pequeño tutorial se verán tres formas de leer archivos, utilizando ciclos `for` (**Rbase**), funciones `map` (librería **purrr**) y `future_map` (librería **furrr**). Algunos aspectos relevantes:
 
 - En simples palabras, las funciones de la librería [purrr](https://github.com/tidyverse/purrr) nos permiten ejecutar funciones a múltiples objetos a un mismo tiempo. Lo que podríamos hacer directamente con ciclos `for` lo podemos traducir a una función de la familia `map` para llevar a cabo el mismo proceso de manera paralela (**Esto no significa que se utilicen múltiples núcleos**). 
-- Por otra parte [furrr](https://github.com/DavisVaughan/furrr) nos permite ir un paso más allá, integrando las capacidades de **purrr** con procesamiento en paralelo a nivel de núcleo.
+- Por otra parte [furrr](https://github.com/DavisVaughan/furrr) nos permite ir un paso más allá, integrando las capacidades de **purrr** con procesamiento en paralelo a nivel de varios núcleos de CPU.
 
 ## Datos a utilizar
 
@@ -78,7 +78,7 @@ A pesar de que en general las funciones `map` nos devuelven una lista, nosotros 
 
 ## Transición a furrr
 
-Cómo mencionabamos al principio podemos ir un paso más allá y paralelizar nuestro proceso a nivel de CPU. Para esto simplemente aplicaremos las funciones de la familia `future_map` de la librería **furrr**.
+Cómo mencionabamos al principio podemos ir un paso más allá y paralelizar nuestro proceso a nivel de múltiples nucleos CPU. Para esto simplemente aplicaremos las funciones de la familia `future_map` de la librería **furrr**.
 
 ```r
 library(readxl)
@@ -88,7 +88,7 @@ library(furrr)
 Archivos <- list.files("datos",full.names = TRUE)
 
 # Declaramos que correremos nuestro proceso en múltiples sesiones de R
-future::plan(multisession)
+future::plan(multisession) 
 
 # Primero tenemos que identificar las hojas por cada archivo
 Hojas <- future_map(Archivos, ~ excel_sheets(.x), .options = furrr_options(seed = T))
@@ -102,7 +102,7 @@ Datos <- future_map2_dfr(Archivos,Hojas, LecturaExcel, .options = furrr_options(
 
 ```
 
-La ventaja de utilizar **furrr** es que podemos incrementar la velocidad del proceso que estamos realizando sacandole el partido a los múltiples núcleos de nuestro CPU. Adicionalmente, si ya disponemos de una tarea con funciones `map`, simplemente tenemos que encontrar su simil a `future_map`. 
+La ventaja de utilizar **furrr** es que podemos incrementar la velocidad del proceso que estamos realizando sacandole el partido a los múltiples núcleos de nuestro CPU. En ese ejemplo, se están utilizando todos los núcleos de la computadora, no obstante si queremos utilizar una cantidad menor, podemos agregar a la función `plan` el argumento `workers = numeronucleosautilizar`. Adicionalmente, si ya disponemos de una tarea con funciones `map`, simplemente tenemos que encontrar su simil a `future_map` para poder implementar estas funciones.
 
 ## Comparación de rendimiento
 
@@ -110,6 +110,9 @@ Podemos evaluar el rendimiento de los tres procesos a través del tiempo que dem
 
 ```r
 library(microbenchmark)
+
+# Declaramos que para la paralización de furrr correremos nuestro proceso en múltiples sesiones de R
+future::plan(multisession)
 
 # Analisis
 microbenchmark(ciclofor = {

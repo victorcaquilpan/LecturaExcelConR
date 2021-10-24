@@ -76,7 +76,7 @@ Datos <- map2_df(Archivos,Hojas, LecturaExcel)
 
 A pesar de que en general las funciones `map` nos devuelven una lista, nosotros podemos indicarle que el resultado sea un dataframe a través de `map_df` o `map2_df`.
 
-## Utilizando furrr
+## Transición a furrr
 
 Cómo mencionabamos al principio podemos ir un paso más allá y paralelizar nuestro proceso a nivel de CPU. Para esto simplemente aplicaremos las funciones de la familia `future_map` de la librería **furrr**.
 

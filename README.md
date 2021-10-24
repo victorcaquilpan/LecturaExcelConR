@@ -162,7 +162,7 @@ microbenchmark(ciclofor = {
   
 },times = 10)
 ```
-En mi computador, un notebook gamer bastante básico me arroja los siguientes resultados:
+En mi computador, un notebook gamer bastante básico de 8 núcleos me arroja los siguientes resultados:
 
 ```
 Unit: seconds
